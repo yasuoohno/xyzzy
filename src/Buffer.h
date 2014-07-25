@@ -47,6 +47,7 @@ extern const wcolor_index_name wcolor_index_names[];
 struct Buffer;
 
 class syntax_info;
+struct syntax_state;
 
 struct Chunk
 {
@@ -69,6 +70,16 @@ struct Chunk
   Char c_estrch;
   u_char c_bstate;
   u_char c_estate;
+  int c_blua_long_bracket;
+  int c_elua_long_bracket;
+
+  /* chunk syntax manipulation */
+  void invalidate_syntax();
+  bool has_valid_syntax_state();
+  bool is_syntax_continuation_with(const Chunk &p);
+  void set_syntax_state_of_beginning_of_chunk(const syntax_state &ss);
+  void set_syntax_state_of_end_of_chunk(const syntax_state &ss);
+  void copy_end_syntax_state_to(syntax_state *ss);
 
   void update_syntax (const syntax_info &);
   void parse_syntax ();

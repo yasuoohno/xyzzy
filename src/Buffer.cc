@@ -60,7 +60,54 @@ Chunk::clear ()
   bzero (c_breaks, BREAKS_SIZE);
   c_first_eol = -1;
   c_last_eol = -1;
-  c_bstate = syntax_state::SS_INVALID;
+  invalidate_syntax();
+}
+
+void
+Chunk::invalidate_syntax ()
+{
+  c_bstrch            = c_estrch            = 0;
+  c_bstate            = c_estate            = syntax_state::SS_INVALID;
+  c_blua_long_bracket = c_elua_long_bracket = 0;
+}
+
+bool
+Chunk::has_valid_syntax_state ()
+{
+    return (c_bstate != syntax_state::SS_INVALID);
+}
+
+bool
+Chunk::is_syntax_continuation_with (const Chunk &p)
+{
+  return ((c_bstate != syntax_state::SS_INVALID) &&
+          (c_bstate == p.c_estate) &&
+          (c_bstrch == p.c_estrch) &&
+          (c_blua_long_bracket == p.c_elua_long_bracket));
+}
+
+void
+Chunk::set_syntax_state_of_beginning_of_chunk (const syntax_state &ss)
+{
+  c_bstate            = ss.ss_state;
+  c_bstrch            = ss.ss_strch;
+  c_blua_long_bracket = ss.lua_long_bracket;
+}
+
+void
+Chunk::set_syntax_state_of_end_of_chunk (const syntax_state &ss)
+{
+  c_estate            = ss.ss_state;
+  c_estrch            = ss.ss_strch;
+  c_elua_long_bracket = ss.lua_long_bracket;
+}
+
+void
+Chunk::copy_end_syntax_state_to (syntax_state *ss)
+{
+    ss->ss_state         = c_estate;
+    ss->ss_strch         = c_estrch;
+    ss->lua_long_bracket = c_elua_long_bracket;
 }
 
 Chunk *
@@ -76,7 +123,7 @@ Buffer::alloc_chunk ()
   cp->c_nbreaks = -1;
   cp->c_first_eol = -1;
   cp->c_last_eol = -1;
-  cp->c_bstate = syntax_state::SS_INVALID;
+  cp->invalidate_syntax();
   cp->c_text = (Char *)Chunk::c_heap.alloc ();
   if (cp->c_text)
     {
