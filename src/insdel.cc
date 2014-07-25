@@ -90,7 +90,7 @@ Buffer::modify_chunk (Chunk *cp) const
 {
   cp->c_nlines = -1;
   cp->c_nbreaks = -1;
-  cp->c_bstate = syntax_state::SS_INVALID;
+  cp->invalidate_syntax();
 }
 
 void

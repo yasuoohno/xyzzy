@@ -1,3 +1,28 @@
+# xyzzy Lua対応版
+
+xyzzy Lua対応版は Yasuo Ohnoが Luaの long bracketに対応出来るように 改造を加えた物です。
+
+一緒に lua-mode.l も追加しています。
+ただ、残念ながら私が lisp素人のため 出来が良くありません。
+改善してくれる人がいるととても嬉しいです :-)
+
+## site-init.lへの追加例
+
+    (require "lua-mode")
+    
+    (setq *lua-indent-level*       4)
+    (setq *lua-label-offset*       4)
+    (setq *lua-tab-always-indent*  t)
+    (setq *lua-indent-tabs-mode* nil)
+    
+    (setq *lua-use-encoding* *encoding-utf8n*)
+    (setq *lua-use-eol-code* *eol-lf*)
+    
+    (pushnew '("\\.lua$" . lua-mode) *auto-mode-alist* :test 'equal)
+
+lua-use-encodingと lua-use-eol-codeは lua編集時のファイル形式を統一したい場合に設定します。
+新規に作ったり漢字が無いファイルがSHIFT-JISに戻ってしまうのが嫌で追加してあります。
+
 # xyzzy
 
 xyzzy は[亀井哲弥氏](http://www.jsdlab.co.jp/~kamei/) が開発した、Common Lisp っぽい言語で拡張可能な
