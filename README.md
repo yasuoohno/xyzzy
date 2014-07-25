@@ -23,6 +23,15 @@ xyzzy Lua対応版は Yasuo Ohnoが Luaの long bracketに対応出来るよう�
 lua-use-encodingと lua-use-eol-codeは lua編集時のファイル形式を統一したい場合に設定します。
 新規に作ったり漢字が無いファイルがSHIFT-JISに戻ってしまうのが嫌で追加してあります。
 
+
+## Contact
+
+  以下は Lua 対応版についての連絡先です。
+
+  * Twitter: [@ohnyo](https://twitter.com/#!/ohnyo)
+  * GitHub: <https://github.com/yasuoohno/xyzzy>
+
+
 # xyzzy
 
 xyzzy は[亀井哲弥氏](http://www.jsdlab.co.jp/~kamei/) が開発した、Common Lisp っぽい言語で拡張可能な
